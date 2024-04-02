@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { blogService } from '../../service'; // Update this path to where your service is defined
 import { Post, CreatePostRequest } from '../../rpc/proto/blog/blog_pb'; // Update these imports based on your actual file structure
 
 export const CreatePost = () => {
-  // State for form fields
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
 
-  // Handle form submission
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/'); // Redirect to the home page if not logged in
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission behavior
 
@@ -32,6 +40,7 @@ export const CreatePost = () => {
       alert('Failed to create post.');
     }
   };
+
 
   return (
     <div className="container mx-auto p-4">

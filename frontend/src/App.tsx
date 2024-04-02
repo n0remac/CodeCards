@@ -1,24 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-// import Demo from '@/pages/Demo';
-// import TemplateForm from '@/pages/TemplateForm';
-// import TemplateBuilder from '@/pages/TemplateBuilder';
-// import BiomeSelector from '@/pages/Biomes';
-// import {StoryTemplateForm} from '@/pages/GenerateTemplate';
-// import { GenerateCards } from './pages/cards/GenerateCards';
-// import { AllCards, DisplayCard, UsersCards } from './pages/cards/Cards';
-// import { CreateCard } from './pages/cards/CreateCard';
-// import { CombineCards } from './pages/cards/CombineCards';
-// import Login from './pages/user/Login';
-// import Register from './pages/user/Register';
-// import GameLobby from './pages/game/Lobby';
-// import { Game } from './pages/game/Game';
-// import {CreateDeck, UsersDecks, DeckById} from './pages/cards/Deck';
 import { AllPosts } from './pages/blog/Blog';
 import { CreatePost } from './pages/blog/CreateBlog';
-
+import Login from './pages/user/Login';
+import Register from './pages/user/Register';
+import Resume from './pages/blog/Resume';
+import { Poetry } from './pages/blog/Poetry';
 
 export default function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Check if user is logged in by checking the presence of a token or any identifier in localStorage
+        const token = localStorage.getItem('userToken');
+        setIsLoggedIn(!!token);
+    }, []);
+
     return (
         <Router>
             <div>
@@ -27,24 +24,38 @@ export default function App() {
                         <li className="float-left">
                             <Link to="/" className="block text-white text-center py-3 px-4 no-underline">Blog</Link>
                         </li>
+                        {isLoggedIn && (
+                            <li className="float-left">
+                                <Link to="/createpost" className="block text-white text-center py-3 px-4 no-underline">Create</Link>
+                            </li>
+                        )}
                         <li className="float-left">
-                            <Link to="/createpost" className="block text-white text-center py-3 px-4 no-underline">Create</Link>
+                            <Link to="/resume" className="block text-white text-center py-3 px-4 no-underline">Resume</Link>
                         </li>
-
-                        
-                        {/* <li style={{ float: 'right' }}>
-                            <Link to="/login" style={{ display: 'block', color: 'white', textAlign: 'center', padding: '14px 16px', textDecoration: 'none' }}>Login</Link>
+                        <li className="float-left">
+                            <Link to="/poetry" className="block text-white text-center py-3 px-4 no-underline">Poetry</Link>
                         </li>
-                        <li style={{ float: 'right' }}>
-                            <Link to="/register" style={{ display: 'block', color: 'white', textAlign: 'center', padding: '14px 16px', textDecoration: 'none' }}>Register</Link>
-                        </li> */}
-                        
+                        {/* Uncomment and adjust the login and register links as necessary */}
+                        {/* {!isLoggedIn && (
+                            <>
+                                <li style={{ float: 'right' }}>
+                                    <Link to="/login" style={{ display: 'block', color: 'white', textAlign: 'center', padding: '14px 16px', textDecoration: 'none' }}>Login</Link>
+                                </li>
+                                <li style={{ float: 'right' }}>
+                                    <Link to="/register" style={{ display: 'block', color: 'white', textAlign: 'center', padding: '14px 16px', textDecoration: 'none' }}>Register</Link>
+                                </li>
+                            </>
+                        )} */}
                     </ul>
                 </nav>
 
                 <Routes>
                     <Route path="/" element={<AllPosts />} />
                     <Route path="/createpost" element={<CreatePost />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='/resume' element={<Resume />} />
+                    <Route path='/poetry' element={<Poetry />} />
                 </Routes>
             </div>
         </Router>

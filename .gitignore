@@ -1,3 +1,5 @@
 node_modules/
 frontend/build/
+frontend/dist/
 */card_images/*
+mydatabase.db

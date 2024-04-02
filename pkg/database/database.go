@@ -21,12 +21,14 @@ func InitDB() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	// Now, let's create the Posts table
+	// Create the Posts table
 	createPostsTable()
+
+	// Create the Users table
+	createUsersTable()
 }
 
 func createPostsTable() {
-	// SQL command to create the Posts table
 	sqlCommand := `
 	CREATE TABLE IF NOT EXISTS posts (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,12 +37,29 @@ func createPostsTable() {
 		author TEXT NOT NULL
 	);`
 
-	// Execute the SQL command
 	_, err := sess.SQL().Exec(sqlCommand)
 	if err != nil {
 		log.Fatalf("Failed to create Posts table: %v", err)
 	} else {
 		log.Println("Posts table created successfully")
+	}
+}
+
+// New function to create the Users table
+func createUsersTable() {
+	sqlCommand := `
+	CREATE TABLE IF NOT EXISTS users (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username TEXT NOT NULL UNIQUE,
+		email TEXT NOT NULL UNIQUE,
+		password TEXT NOT NULL
+	);`
+
+	_, err := sess.SQL().Exec(sqlCommand)
+	if err != nil {
+		log.Fatalf("Failed to create Users table: %v", err)
+	} else {
+		log.Println("Users table created successfully")
 	}
 }
 
