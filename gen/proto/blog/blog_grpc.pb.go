@@ -24,6 +24,10 @@ const _ = grpc.SupportPackageIsVersion7
 type BlogServiceClient interface {
 	CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*CreatePostResponse, error)
 	GetPosts(ctx context.Context, in *GetPostsRequest, opts ...grpc.CallOption) (*GetPostsResponse, error)
+	CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error)
+	AssociateTagWithPost(ctx context.Context, in *AssociateTagWithPostRequest, opts ...grpc.CallOption) (*AssociateTagWithPostResponse, error)
+	GetTagsForPost(ctx context.Context, in *GetTagsForPostRequest, opts ...grpc.CallOption) (*GetTagsForPostResponse, error)
+	GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error)
 }
 
 type blogServiceClient struct {
@@ -52,12 +56,52 @@ func (c *blogServiceClient) GetPosts(ctx context.Context, in *GetPostsRequest, o
 	return out, nil
 }
 
+func (c *blogServiceClient) CreateTag(ctx context.Context, in *CreateTagRequest, opts ...grpc.CallOption) (*CreateTagResponse, error) {
+	out := new(CreateTagResponse)
+	err := c.cc.Invoke(ctx, "/blog.BlogService/CreateTag", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogServiceClient) AssociateTagWithPost(ctx context.Context, in *AssociateTagWithPostRequest, opts ...grpc.CallOption) (*AssociateTagWithPostResponse, error) {
+	out := new(AssociateTagWithPostResponse)
+	err := c.cc.Invoke(ctx, "/blog.BlogService/AssociateTagWithPost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogServiceClient) GetTagsForPost(ctx context.Context, in *GetTagsForPostRequest, opts ...grpc.CallOption) (*GetTagsForPostResponse, error) {
+	out := new(GetTagsForPostResponse)
+	err := c.cc.Invoke(ctx, "/blog.BlogService/GetTagsForPost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *blogServiceClient) GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error) {
+	out := new(GetTagsResponse)
+	err := c.cc.Invoke(ctx, "/blog.BlogService/GetTags", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlogServiceServer is the server API for BlogService service.
 // All implementations should embed UnimplementedBlogServiceServer
 // for forward compatibility
 type BlogServiceServer interface {
 	CreatePost(context.Context, *CreatePostRequest) (*CreatePostResponse, error)
 	GetPosts(context.Context, *GetPostsRequest) (*GetPostsResponse, error)
+	CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error)
+	AssociateTagWithPost(context.Context, *AssociateTagWithPostRequest) (*AssociateTagWithPostResponse, error)
+	GetTagsForPost(context.Context, *GetTagsForPostRequest) (*GetTagsForPostResponse, error)
+	GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error)
 }
 
 // UnimplementedBlogServiceServer should be embedded to have forward compatible implementations.
@@ -69,6 +113,18 @@ func (UnimplementedBlogServiceServer) CreatePost(context.Context, *CreatePostReq
 }
 func (UnimplementedBlogServiceServer) GetPosts(context.Context, *GetPostsRequest) (*GetPostsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPosts not implemented")
+}
+func (UnimplementedBlogServiceServer) CreateTag(context.Context, *CreateTagRequest) (*CreateTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTag not implemented")
+}
+func (UnimplementedBlogServiceServer) AssociateTagWithPost(context.Context, *AssociateTagWithPostRequest) (*AssociateTagWithPostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssociateTagWithPost not implemented")
+}
+func (UnimplementedBlogServiceServer) GetTagsForPost(context.Context, *GetTagsForPostRequest) (*GetTagsForPostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTagsForPost not implemented")
+}
+func (UnimplementedBlogServiceServer) GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTags not implemented")
 }
 
 // UnsafeBlogServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -118,6 +174,78 @@ func _BlogService_GetPosts_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlogService_CreateTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogServiceServer).CreateTag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/blog.BlogService/CreateTag",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogServiceServer).CreateTag(ctx, req.(*CreateTagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogService_AssociateTagWithPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssociateTagWithPostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogServiceServer).AssociateTagWithPost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/blog.BlogService/AssociateTagWithPost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogServiceServer).AssociateTagWithPost(ctx, req.(*AssociateTagWithPostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogService_GetTagsForPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTagsForPostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogServiceServer).GetTagsForPost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/blog.BlogService/GetTagsForPost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogServiceServer).GetTagsForPost(ctx, req.(*GetTagsForPostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BlogService_GetTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogServiceServer).GetTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/blog.BlogService/GetTags",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogServiceServer).GetTags(ctx, req.(*GetTagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlogService_ServiceDesc is the grpc.ServiceDesc for BlogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -132,6 +260,22 @@ var BlogService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPosts",
 			Handler:    _BlogService_GetPosts_Handler,
+		},
+		{
+			MethodName: "CreateTag",
+			Handler:    _BlogService_CreateTag_Handler,
+		},
+		{
+			MethodName: "AssociateTagWithPost",
+			Handler:    _BlogService_AssociateTagWithPost_Handler,
+		},
+		{
+			MethodName: "GetTagsForPost",
+			Handler:    _BlogService_GetTagsForPost_Handler,
+		},
+		{
+			MethodName: "GetTags",
+			Handler:    _BlogService_GetTags_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

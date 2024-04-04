@@ -9,11 +9,16 @@ message Post {
   string title = 2;
   string content = 3;
   string author = 4;
+  repeated Tag tags = 5;
 }
 
 service BlogService {
   rpc CreatePost(CreatePostRequest) returns (CreatePostResponse);
   rpc GetPosts(GetPostsRequest) returns (GetPostsResponse);
+  rpc CreateTag(CreateTagRequest) returns (CreateTagResponse);
+  rpc AssociateTagWithPost(AssociateTagWithPostRequest) returns (AssociateTagWithPostResponse);
+  rpc GetTagsForPost(GetTagsForPostRequest) returns (GetTagsForPostResponse);
+  rpc GetTags(GetTagsRequest) returns (GetTagsResponse);
 }
 
 message Posts {
@@ -22,6 +27,7 @@ message Posts {
 
 message CreatePostRequest {
   Post post = 1;
+  repeated int32 tag_ids = 2;
 }
 
 message CreatePostResponse {
@@ -34,4 +40,40 @@ message GetPostsResponse {
 
 message GetPostsRequest {
   Posts posts = 1;
+}
+
+message Tag {
+  int32 id = 1;
+  string name = 2;
+}
+
+message CreateTagRequest {
+  string name = 1;
+}
+
+message CreateTagResponse {
+  Tag tag = 1;
+}
+
+message AssociateTagWithPostRequest {
+  int32 post_id = 1;
+  int32 tag_id = 2;
+}
+
+message AssociateTagWithPostResponse {
+  bool success = 1;
+}
+
+message GetTagsRequest {}
+
+message GetTagsResponse {
+  repeated Tag tags = 1;
+}
+
+message GetTagsForPostRequest {
+  int32 post_id = 1;
+}
+
+message GetTagsForPostResponse {
+  repeated Tag tags = 1;
 }

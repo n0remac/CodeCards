@@ -37,12 +37,26 @@ const (
 	BlogServiceCreatePostProcedure = "/blog.BlogService/CreatePost"
 	// BlogServiceGetPostsProcedure is the fully-qualified name of the BlogService's GetPosts RPC.
 	BlogServiceGetPostsProcedure = "/blog.BlogService/GetPosts"
+	// BlogServiceCreateTagProcedure is the fully-qualified name of the BlogService's CreateTag RPC.
+	BlogServiceCreateTagProcedure = "/blog.BlogService/CreateTag"
+	// BlogServiceAssociateTagWithPostProcedure is the fully-qualified name of the BlogService's
+	// AssociateTagWithPost RPC.
+	BlogServiceAssociateTagWithPostProcedure = "/blog.BlogService/AssociateTagWithPost"
+	// BlogServiceGetTagsForPostProcedure is the fully-qualified name of the BlogService's
+	// GetTagsForPost RPC.
+	BlogServiceGetTagsForPostProcedure = "/blog.BlogService/GetTagsForPost"
+	// BlogServiceGetTagsProcedure is the fully-qualified name of the BlogService's GetTags RPC.
+	BlogServiceGetTagsProcedure = "/blog.BlogService/GetTags"
 )
 
 // BlogServiceClient is a client for the blog.BlogService service.
 type BlogServiceClient interface {
 	CreatePost(context.Context, *connect_go.Request[blog.CreatePostRequest]) (*connect_go.Response[blog.CreatePostResponse], error)
 	GetPosts(context.Context, *connect_go.Request[blog.GetPostsRequest]) (*connect_go.Response[blog.GetPostsResponse], error)
+	CreateTag(context.Context, *connect_go.Request[blog.CreateTagRequest]) (*connect_go.Response[blog.CreateTagResponse], error)
+	AssociateTagWithPost(context.Context, *connect_go.Request[blog.AssociateTagWithPostRequest]) (*connect_go.Response[blog.AssociateTagWithPostResponse], error)
+	GetTagsForPost(context.Context, *connect_go.Request[blog.GetTagsForPostRequest]) (*connect_go.Response[blog.GetTagsForPostResponse], error)
+	GetTags(context.Context, *connect_go.Request[blog.GetTagsRequest]) (*connect_go.Response[blog.GetTagsResponse], error)
 }
 
 // NewBlogServiceClient constructs a client for the blog.BlogService service. By default, it uses
@@ -65,13 +79,37 @@ func NewBlogServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+BlogServiceGetPostsProcedure,
 			opts...,
 		),
+		createTag: connect_go.NewClient[blog.CreateTagRequest, blog.CreateTagResponse](
+			httpClient,
+			baseURL+BlogServiceCreateTagProcedure,
+			opts...,
+		),
+		associateTagWithPost: connect_go.NewClient[blog.AssociateTagWithPostRequest, blog.AssociateTagWithPostResponse](
+			httpClient,
+			baseURL+BlogServiceAssociateTagWithPostProcedure,
+			opts...,
+		),
+		getTagsForPost: connect_go.NewClient[blog.GetTagsForPostRequest, blog.GetTagsForPostResponse](
+			httpClient,
+			baseURL+BlogServiceGetTagsForPostProcedure,
+			opts...,
+		),
+		getTags: connect_go.NewClient[blog.GetTagsRequest, blog.GetTagsResponse](
+			httpClient,
+			baseURL+BlogServiceGetTagsProcedure,
+			opts...,
+		),
 	}
 }
 
 // blogServiceClient implements BlogServiceClient.
 type blogServiceClient struct {
-	createPost *connect_go.Client[blog.CreatePostRequest, blog.CreatePostResponse]
-	getPosts   *connect_go.Client[blog.GetPostsRequest, blog.GetPostsResponse]
+	createPost           *connect_go.Client[blog.CreatePostRequest, blog.CreatePostResponse]
+	getPosts             *connect_go.Client[blog.GetPostsRequest, blog.GetPostsResponse]
+	createTag            *connect_go.Client[blog.CreateTagRequest, blog.CreateTagResponse]
+	associateTagWithPost *connect_go.Client[blog.AssociateTagWithPostRequest, blog.AssociateTagWithPostResponse]
+	getTagsForPost       *connect_go.Client[blog.GetTagsForPostRequest, blog.GetTagsForPostResponse]
+	getTags              *connect_go.Client[blog.GetTagsRequest, blog.GetTagsResponse]
 }
 
 // CreatePost calls blog.BlogService.CreatePost.
@@ -84,10 +122,34 @@ func (c *blogServiceClient) GetPosts(ctx context.Context, req *connect_go.Reques
 	return c.getPosts.CallUnary(ctx, req)
 }
 
+// CreateTag calls blog.BlogService.CreateTag.
+func (c *blogServiceClient) CreateTag(ctx context.Context, req *connect_go.Request[blog.CreateTagRequest]) (*connect_go.Response[blog.CreateTagResponse], error) {
+	return c.createTag.CallUnary(ctx, req)
+}
+
+// AssociateTagWithPost calls blog.BlogService.AssociateTagWithPost.
+func (c *blogServiceClient) AssociateTagWithPost(ctx context.Context, req *connect_go.Request[blog.AssociateTagWithPostRequest]) (*connect_go.Response[blog.AssociateTagWithPostResponse], error) {
+	return c.associateTagWithPost.CallUnary(ctx, req)
+}
+
+// GetTagsForPost calls blog.BlogService.GetTagsForPost.
+func (c *blogServiceClient) GetTagsForPost(ctx context.Context, req *connect_go.Request[blog.GetTagsForPostRequest]) (*connect_go.Response[blog.GetTagsForPostResponse], error) {
+	return c.getTagsForPost.CallUnary(ctx, req)
+}
+
+// GetTags calls blog.BlogService.GetTags.
+func (c *blogServiceClient) GetTags(ctx context.Context, req *connect_go.Request[blog.GetTagsRequest]) (*connect_go.Response[blog.GetTagsResponse], error) {
+	return c.getTags.CallUnary(ctx, req)
+}
+
 // BlogServiceHandler is an implementation of the blog.BlogService service.
 type BlogServiceHandler interface {
 	CreatePost(context.Context, *connect_go.Request[blog.CreatePostRequest]) (*connect_go.Response[blog.CreatePostResponse], error)
 	GetPosts(context.Context, *connect_go.Request[blog.GetPostsRequest]) (*connect_go.Response[blog.GetPostsResponse], error)
+	CreateTag(context.Context, *connect_go.Request[blog.CreateTagRequest]) (*connect_go.Response[blog.CreateTagResponse], error)
+	AssociateTagWithPost(context.Context, *connect_go.Request[blog.AssociateTagWithPostRequest]) (*connect_go.Response[blog.AssociateTagWithPostResponse], error)
+	GetTagsForPost(context.Context, *connect_go.Request[blog.GetTagsForPostRequest]) (*connect_go.Response[blog.GetTagsForPostResponse], error)
+	GetTags(context.Context, *connect_go.Request[blog.GetTagsRequest]) (*connect_go.Response[blog.GetTagsResponse], error)
 }
 
 // NewBlogServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -106,12 +168,40 @@ func NewBlogServiceHandler(svc BlogServiceHandler, opts ...connect_go.HandlerOpt
 		svc.GetPosts,
 		opts...,
 	)
+	blogServiceCreateTagHandler := connect_go.NewUnaryHandler(
+		BlogServiceCreateTagProcedure,
+		svc.CreateTag,
+		opts...,
+	)
+	blogServiceAssociateTagWithPostHandler := connect_go.NewUnaryHandler(
+		BlogServiceAssociateTagWithPostProcedure,
+		svc.AssociateTagWithPost,
+		opts...,
+	)
+	blogServiceGetTagsForPostHandler := connect_go.NewUnaryHandler(
+		BlogServiceGetTagsForPostProcedure,
+		svc.GetTagsForPost,
+		opts...,
+	)
+	blogServiceGetTagsHandler := connect_go.NewUnaryHandler(
+		BlogServiceGetTagsProcedure,
+		svc.GetTags,
+		opts...,
+	)
 	return "/blog.BlogService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case BlogServiceCreatePostProcedure:
 			blogServiceCreatePostHandler.ServeHTTP(w, r)
 		case BlogServiceGetPostsProcedure:
 			blogServiceGetPostsHandler.ServeHTTP(w, r)
+		case BlogServiceCreateTagProcedure:
+			blogServiceCreateTagHandler.ServeHTTP(w, r)
+		case BlogServiceAssociateTagWithPostProcedure:
+			blogServiceAssociateTagWithPostHandler.ServeHTTP(w, r)
+		case BlogServiceGetTagsForPostProcedure:
+			blogServiceGetTagsForPostHandler.ServeHTTP(w, r)
+		case BlogServiceGetTagsProcedure:
+			blogServiceGetTagsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -127,4 +217,20 @@ func (UnimplementedBlogServiceHandler) CreatePost(context.Context, *connect_go.R
 
 func (UnimplementedBlogServiceHandler) GetPosts(context.Context, *connect_go.Request[blog.GetPostsRequest]) (*connect_go.Response[blog.GetPostsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.GetPosts is not implemented"))
+}
+
+func (UnimplementedBlogServiceHandler) CreateTag(context.Context, *connect_go.Request[blog.CreateTagRequest]) (*connect_go.Response[blog.CreateTagResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.CreateTag is not implemented"))
+}
+
+func (UnimplementedBlogServiceHandler) AssociateTagWithPost(context.Context, *connect_go.Request[blog.AssociateTagWithPostRequest]) (*connect_go.Response[blog.AssociateTagWithPostResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.AssociateTagWithPost is not implemented"))
+}
+
+func (UnimplementedBlogServiceHandler) GetTagsForPost(context.Context, *connect_go.Request[blog.GetTagsForPostRequest]) (*connect_go.Response[blog.GetTagsForPostResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.GetTagsForPost is not implemented"))
+}
+
+func (UnimplementedBlogServiceHandler) GetTags(context.Context, *connect_go.Request[blog.GetTagsRequest]) (*connect_go.Response[blog.GetTagsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.GetTags is not implemented"))
 }

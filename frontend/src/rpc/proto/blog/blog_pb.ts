@@ -30,6 +30,11 @@ export class Post extends Message<Post> {
    */
   author = "";
 
+  /**
+   * @generated from field: repeated blog.Tag tags = 5;
+   */
+  tags: Tag[] = [];
+
   constructor(data?: PartialMessage<Post>) {
     super();
     proto3.util.initPartial(data, this);
@@ -42,6 +47,7 @@ export class Post extends Message<Post> {
     { no: 2, name: "title", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "content", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "author", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "tags", kind: "message", T: Tag, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Post {
@@ -107,6 +113,11 @@ export class CreatePostRequest extends Message<CreatePostRequest> {
    */
   post?: Post;
 
+  /**
+   * @generated from field: repeated int32 tag_ids = 2;
+   */
+  tagIds: number[] = [];
+
   constructor(data?: PartialMessage<CreatePostRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -116,6 +127,7 @@ export class CreatePostRequest extends Message<CreatePostRequest> {
   static readonly typeName = "blog.CreatePostRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "post", kind: "message", T: Post },
+    { no: 2, name: "tag_ids", kind: "scalar", T: 5 /* ScalarType.INT32 */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreatePostRequest {
@@ -243,6 +255,345 @@ export class GetPostsRequest extends Message<GetPostsRequest> {
 
   static equals(a: GetPostsRequest | PlainMessage<GetPostsRequest> | undefined, b: GetPostsRequest | PlainMessage<GetPostsRequest> | undefined): boolean {
     return proto3.util.equals(GetPostsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.Tag
+ */
+export class Tag extends Message<Tag> {
+  /**
+   * @generated from field: int32 id = 1;
+   */
+  id = 0;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  constructor(data?: PartialMessage<Tag>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.Tag";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Tag {
+    return new Tag().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Tag {
+    return new Tag().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Tag {
+    return new Tag().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: Tag | PlainMessage<Tag> | undefined, b: Tag | PlainMessage<Tag> | undefined): boolean {
+    return proto3.util.equals(Tag, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.CreateTagRequest
+ */
+export class CreateTagRequest extends Message<CreateTagRequest> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name = "";
+
+  constructor(data?: PartialMessage<CreateTagRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.CreateTagRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateTagRequest {
+    return new CreateTagRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateTagRequest {
+    return new CreateTagRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateTagRequest {
+    return new CreateTagRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateTagRequest | PlainMessage<CreateTagRequest> | undefined, b: CreateTagRequest | PlainMessage<CreateTagRequest> | undefined): boolean {
+    return proto3.util.equals(CreateTagRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.CreateTagResponse
+ */
+export class CreateTagResponse extends Message<CreateTagResponse> {
+  /**
+   * @generated from field: blog.Tag tag = 1;
+   */
+  tag?: Tag;
+
+  constructor(data?: PartialMessage<CreateTagResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.CreateTagResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "tag", kind: "message", T: Tag },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): CreateTagResponse {
+    return new CreateTagResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): CreateTagResponse {
+    return new CreateTagResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): CreateTagResponse {
+    return new CreateTagResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: CreateTagResponse | PlainMessage<CreateTagResponse> | undefined, b: CreateTagResponse | PlainMessage<CreateTagResponse> | undefined): boolean {
+    return proto3.util.equals(CreateTagResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.AssociateTagWithPostRequest
+ */
+export class AssociateTagWithPostRequest extends Message<AssociateTagWithPostRequest> {
+  /**
+   * @generated from field: int32 post_id = 1;
+   */
+  postId = 0;
+
+  /**
+   * @generated from field: int32 tag_id = 2;
+   */
+  tagId = 0;
+
+  constructor(data?: PartialMessage<AssociateTagWithPostRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.AssociateTagWithPostRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "post_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 2, name: "tag_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AssociateTagWithPostRequest {
+    return new AssociateTagWithPostRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AssociateTagWithPostRequest {
+    return new AssociateTagWithPostRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AssociateTagWithPostRequest {
+    return new AssociateTagWithPostRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AssociateTagWithPostRequest | PlainMessage<AssociateTagWithPostRequest> | undefined, b: AssociateTagWithPostRequest | PlainMessage<AssociateTagWithPostRequest> | undefined): boolean {
+    return proto3.util.equals(AssociateTagWithPostRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.AssociateTagWithPostResponse
+ */
+export class AssociateTagWithPostResponse extends Message<AssociateTagWithPostResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  constructor(data?: PartialMessage<AssociateTagWithPostResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.AssociateTagWithPostResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): AssociateTagWithPostResponse {
+    return new AssociateTagWithPostResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): AssociateTagWithPostResponse {
+    return new AssociateTagWithPostResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): AssociateTagWithPostResponse {
+    return new AssociateTagWithPostResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: AssociateTagWithPostResponse | PlainMessage<AssociateTagWithPostResponse> | undefined, b: AssociateTagWithPostResponse | PlainMessage<AssociateTagWithPostResponse> | undefined): boolean {
+    return proto3.util.equals(AssociateTagWithPostResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.GetTagsRequest
+ */
+export class GetTagsRequest extends Message<GetTagsRequest> {
+  constructor(data?: PartialMessage<GetTagsRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.GetTagsRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTagsRequest {
+    return new GetTagsRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTagsRequest {
+    return new GetTagsRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTagsRequest {
+    return new GetTagsRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetTagsRequest | PlainMessage<GetTagsRequest> | undefined, b: GetTagsRequest | PlainMessage<GetTagsRequest> | undefined): boolean {
+    return proto3.util.equals(GetTagsRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.GetTagsResponse
+ */
+export class GetTagsResponse extends Message<GetTagsResponse> {
+  /**
+   * @generated from field: repeated blog.Tag tags = 1;
+   */
+  tags: Tag[] = [];
+
+  constructor(data?: PartialMessage<GetTagsResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.GetTagsResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "tags", kind: "message", T: Tag, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTagsResponse {
+    return new GetTagsResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTagsResponse {
+    return new GetTagsResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTagsResponse {
+    return new GetTagsResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetTagsResponse | PlainMessage<GetTagsResponse> | undefined, b: GetTagsResponse | PlainMessage<GetTagsResponse> | undefined): boolean {
+    return proto3.util.equals(GetTagsResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.GetTagsForPostRequest
+ */
+export class GetTagsForPostRequest extends Message<GetTagsForPostRequest> {
+  /**
+   * @generated from field: int32 post_id = 1;
+   */
+  postId = 0;
+
+  constructor(data?: PartialMessage<GetTagsForPostRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.GetTagsForPostRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "post_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTagsForPostRequest {
+    return new GetTagsForPostRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTagsForPostRequest {
+    return new GetTagsForPostRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTagsForPostRequest {
+    return new GetTagsForPostRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetTagsForPostRequest | PlainMessage<GetTagsForPostRequest> | undefined, b: GetTagsForPostRequest | PlainMessage<GetTagsForPostRequest> | undefined): boolean {
+    return proto3.util.equals(GetTagsForPostRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.GetTagsForPostResponse
+ */
+export class GetTagsForPostResponse extends Message<GetTagsForPostResponse> {
+  /**
+   * @generated from field: repeated blog.Tag tags = 1;
+   */
+  tags: Tag[] = [];
+
+  constructor(data?: PartialMessage<GetTagsForPostResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.GetTagsForPostResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "tags", kind: "message", T: Tag, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetTagsForPostResponse {
+    return new GetTagsForPostResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetTagsForPostResponse {
+    return new GetTagsForPostResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetTagsForPostResponse {
+    return new GetTagsForPostResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetTagsForPostResponse | PlainMessage<GetTagsForPostResponse> | undefined, b: GetTagsForPostResponse | PlainMessage<GetTagsForPostResponse> | undefined): boolean {
+    return proto3.util.equals(GetTagsForPostResponse, a, b);
   }
 }
 

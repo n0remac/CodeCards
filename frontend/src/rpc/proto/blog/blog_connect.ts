@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { CreatePostRequest, CreatePostResponse, GetPostsRequest, GetPostsResponse } from "./blog_pb.js";
+import { AssociateTagWithPostRequest, AssociateTagWithPostResponse, CreatePostRequest, CreatePostResponse, CreateTagRequest, CreateTagResponse, GetPostsRequest, GetPostsResponse, GetTagsForPostRequest, GetTagsForPostResponse, GetTagsRequest, GetTagsResponse } from "./blog_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -28,6 +28,42 @@ export const BlogService = {
       name: "GetPosts",
       I: GetPostsRequest,
       O: GetPostsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc blog.BlogService.CreateTag
+     */
+    createTag: {
+      name: "CreateTag",
+      I: CreateTagRequest,
+      O: CreateTagResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc blog.BlogService.AssociateTagWithPost
+     */
+    associateTagWithPost: {
+      name: "AssociateTagWithPost",
+      I: AssociateTagWithPostRequest,
+      O: AssociateTagWithPostResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc blog.BlogService.GetTagsForPost
+     */
+    getTagsForPost: {
+      name: "GetTagsForPost",
+      I: GetTagsForPostRequest,
+      O: GetTagsForPostResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc blog.BlogService.GetTags
+     */
+    getTags: {
+      name: "GetTags",
+      I: GetTagsRequest,
+      O: GetTagsResponse,
       kind: MethodKind.Unary,
     },
   }

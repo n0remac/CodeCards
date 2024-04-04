@@ -6,6 +6,7 @@ import Login from './pages/user/Login';
 import Register from './pages/user/Register';
 import Resume from './pages/blog/Resume';
 import { Poetry } from './pages/blog/Poetry';
+import { CreateTag } from './pages/blog/CreateTag';
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,9 +26,14 @@ export default function App() {
                             <Link to="/" className="block text-white text-center py-3 px-4 no-underline">Blog</Link>
                         </li>
                         {isLoggedIn && (
-                            <li className="float-left">
-                                <Link to="/createpost" className="block text-white text-center py-3 px-4 no-underline">Create</Link>
-                            </li>
+                            <div>
+                                <li className="float-left">
+                                    <Link to="/createpost" className="block text-white text-center py-3 px-4 no-underline">Create</Link>
+                                </li>
+                                <li className="float-left">
+                                    <Link to="/tags" className="block text-white text-center py-3 px-4 no-underline">Tags</Link>
+                                </li>
+                            </div>
                         )}
                         <li className="float-left">
                             <Link to="/resume" className="block text-white text-center py-3 px-4 no-underline">Resume</Link>
@@ -56,6 +62,7 @@ export default function App() {
                     <Route path='/register' element={<Register />} />
                     <Route path='/resume' element={<Resume />} />
                     <Route path='/poetry' element={<Poetry />} />
+                    <Route path='/tags' element={<CreateTag />} />
                 </Routes>
             </div>
         </Router>

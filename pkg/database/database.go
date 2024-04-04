@@ -21,11 +21,11 @@ func InitDB() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	// Create the Posts table
+	// Create tables
 	createPostsTable()
-
-	// Create the Users table
 	createUsersTable()
+	createTagsTable()
+	createPostsTagsTable()
 }
 
 func createPostsTable() {
@@ -62,6 +62,40 @@ func createUsersTable() {
 		log.Println("Users table created successfully")
 	}
 }
+
+func createTagsTable() {
+	sqlCommand := `
+	CREATE TABLE IF NOT EXISTS tags (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT NOT NULL UNIQUE
+	);`
+
+	_, err := sess.SQL().Exec(sqlCommand)
+	if err != nil {
+		log.Fatalf("Failed to create Tags table: %v", err)
+	} else {
+		log.Println("Tags table created successfully")
+	}
+}
+
+func createPostsTagsTable() {
+	sqlCommand := `
+	CREATE TABLE IF NOT EXISTS posts_tags (
+		post_id INTEGER NOT NULL,
+		tag_id INTEGER NOT NULL,
+		FOREIGN KEY(post_id) REFERENCES posts(id),
+		FOREIGN KEY(tag_id) REFERENCES tags(id),
+		PRIMARY KEY(post_id, tag_id)
+	);`
+
+	_, err := sess.SQL().Exec(sqlCommand)
+	if err != nil {
+		log.Fatalf("Failed to create PostsTags join table: %v", err)
+	} else {
+		log.Println("PostsTags join table created successfully")
+	}
+}
+
 
 func GetSession() db.Session {
 	return sess
