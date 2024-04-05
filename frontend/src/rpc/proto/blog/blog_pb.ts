@@ -259,6 +259,80 @@ export class GetPostsRequest extends Message<GetPostsRequest> {
 }
 
 /**
+ * @generated from message blog.GetPostRequest
+ */
+export class GetPostRequest extends Message<GetPostRequest> {
+  /**
+   * @generated from field: int32 id = 1;
+   */
+  id = 0;
+
+  constructor(data?: PartialMessage<GetPostRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.GetPostRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetPostRequest {
+    return new GetPostRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetPostRequest {
+    return new GetPostRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetPostRequest {
+    return new GetPostRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetPostRequest | PlainMessage<GetPostRequest> | undefined, b: GetPostRequest | PlainMessage<GetPostRequest> | undefined): boolean {
+    return proto3.util.equals(GetPostRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.GetPostResponse
+ */
+export class GetPostResponse extends Message<GetPostResponse> {
+  /**
+   * @generated from field: blog.Post post = 1;
+   */
+  post?: Post;
+
+  constructor(data?: PartialMessage<GetPostResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.GetPostResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "post", kind: "message", T: Post },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetPostResponse {
+    return new GetPostResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetPostResponse {
+    return new GetPostResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetPostResponse {
+    return new GetPostResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetPostResponse | PlainMessage<GetPostResponse> | undefined, b: GetPostResponse | PlainMessage<GetPostResponse> | undefined): boolean {
+    return proto3.util.equals(GetPostResponse, a, b);
+  }
+}
+
+/**
  * @generated from message blog.Tag
  */
 export class Tag extends Message<Tag> {

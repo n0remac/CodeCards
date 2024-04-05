@@ -191,3 +191,22 @@ func ConvertTagsToProtoTags(tags []Tag) []*blog.Tag {
 	}
 	return protoTags
 }
+
+func getPost(postID int) (*Post, []Tag, error) {
+    sess := database.GetSession()
+    var dbPost Post
+
+    // Find the post by ID
+    err := sess.Collection("posts").Find(db.Cond{"id": postID}).One(&dbPost)
+    if err != nil {
+        return nil, nil, err
+    }
+
+    // Fetch tags for the post
+    tags, err := getTagsForPost(postID)
+    if err != nil {
+        return nil, nil, err
+    }
+
+    return &dbPost, tags, nil
+}

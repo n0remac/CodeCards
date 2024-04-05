@@ -19,6 +19,7 @@ service BlogService {
   rpc AssociateTagWithPost(AssociateTagWithPostRequest) returns (AssociateTagWithPostResponse);
   rpc GetTagsForPost(GetTagsForPostRequest) returns (GetTagsForPostResponse);
   rpc GetTags(GetTagsRequest) returns (GetTagsResponse);
+  rpc GetPost(GetPostRequest) returns (GetPostResponse);
 }
 
 message Posts {
@@ -40,6 +41,14 @@ message GetPostsResponse {
 
 message GetPostsRequest {
   Posts posts = 1;
+}
+
+message GetPostRequest {
+  int32 id = 1;
+}
+
+message GetPostResponse {
+  Post post = 1;
 }
 
 message Tag {

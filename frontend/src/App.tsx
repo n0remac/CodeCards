@@ -7,6 +7,7 @@ import Register from './pages/user/Register';
 import Resume from './pages/blog/Resume';
 import { Poetry } from './pages/blog/Poetry';
 import { CreateTag } from './pages/blog/CreateTag';
+import { FullPostComponent } from './pages/blog/ContentPage';
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,6 +64,7 @@ export default function App() {
                     <Route path='/resume' element={<Resume />} />
                     <Route path='/poetry' element={<Poetry />} />
                     <Route path='/tags' element={<CreateTag />} />
+                    <Route path="/post/:postId" element={<FullPostComponent />} />
                 </Routes>
             </div>
         </Router>
