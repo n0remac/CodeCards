@@ -4,6 +4,7 @@ import (
 	"cards/gen/proto/blog"
 	"cards/pkg/database"
 	"fmt"
+	"strings"
 
 	"github.com/upper/db/v4"
 )
@@ -85,6 +86,80 @@ func getPosts(p *blog.Posts) (*blog.Posts, error) {
 	}
 
 	return returnPosts, nil
+}
+
+func getPostsByTags(tagNames []string) (*blog.Posts, error) {
+	sess := database.GetSession()
+	var protoPosts []*blog.Post
+
+	// Convert tagNames to interfaceSlice for the SQL query.
+	interfaceSlice := make([]interface{}, len(tagNames))
+	for i, v := range tagNames {
+		interfaceSlice[i] = v
+	}
+
+	// Find tag IDs based on tagNames.
+	query := fmt.Sprintf("SELECT id FROM tags WHERE name IN (%s)", strings.Repeat("?,", len(tagNames)-1)+"?")
+	var tagIDs []int
+	res, err := sess.SQL().Query(query, interfaceSlice...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to execute query for tag IDs: %w", err)
+	}
+	defer res.Close()
+
+	for res.Next() {
+		var id int
+		if err := res.Scan(&id); err != nil {
+			return nil, fmt.Errorf("failed to scan tag ID: %w", err)
+		}
+		tagIDs = append(tagIDs, id)
+	}
+
+	if len(tagIDs) == 0 {
+		return &blog.Posts{}, nil // No tags found, return empty result.
+	}
+
+	// Reset interfaceSlice for postIDs query.
+	interfaceSlice = make([]interface{}, len(tagIDs))
+	for i, v := range tagIDs {
+		interfaceSlice[i] = v
+	}
+
+	// Find posts that have any of these tagIDs.
+	query = fmt.Sprintf("SELECT DISTINCT post_id FROM posts_tags WHERE tag_id IN (%s)", strings.Repeat("?,", len(tagIDs)-1)+"?")
+	res, err = sess.SQL().Query(query, interfaceSlice...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to execute query for post IDs: %w", err)
+	}
+	defer res.Close()
+
+	var postIDs []int
+	for res.Next() {
+		var postID int
+		if err := res.Scan(&postID); err != nil {
+			return nil, fmt.Errorf("failed to scan post ID: %w", err)
+		}
+		postIDs = append(postIDs, postID)
+	}
+
+	// Fetch each post by ID and its tags.
+	for _, postID := range postIDs {
+		dbPost, tags, err := getPost(postID)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get post: %w", err)
+		}
+		protoTags := ConvertTagsToProtoTags(tags)
+		protoPost := &blog.Post{
+			Id:      int32(dbPost.ID),
+			Title:   dbPost.Title,
+			Content: dbPost.Content,
+			Author:  dbPost.Author,
+			Tags:    protoTags,
+		}
+		protoPosts = append(protoPosts, protoPost)
+	}
+
+	return &blog.Posts{Posts: protoPosts}, nil
 }
 
 func deletePost(postID int) error {

@@ -42,6 +42,7 @@ message GetPostsResponse {
 
 message GetPostsRequest {
   Posts posts = 1;
+  repeated string tags = 2;
 }
 
 message GetPostRequest {

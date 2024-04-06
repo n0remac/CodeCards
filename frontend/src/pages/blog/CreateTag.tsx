@@ -26,6 +26,11 @@ export const CreateTag = () => {
     }
   };
 
+  const handleTagClick = (tagName: string) => {
+    // Navigate to the /filtered route with the clicked tag as a query parameter
+    navigate(`/filtered?tag=${encodeURIComponent(tagName)}`);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -50,34 +55,33 @@ export const CreateTag = () => {
 
   return (
     <div className="container mx-auto p-4">
-    <h1 className="text-2xl font-bold mb-4">Tags</h1>
+      <h1 className="text-2xl font-bold mb-4">Tags</h1>
 
-    {/* Render tag creation form only if user is logged in */}
-    {isLoggedIn && (
+      {isLoggedIn && (
         <form onSubmit={handleSubmit} className="w-full max-w-lg mb-6">
-        <div className="flex flex-wrap -mx-3 mb-2">
+          <div className="flex flex-wrap -mx-3 mb-2">
             <div className="w-full px-3 mb-6">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="tag-name">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="tag-name">
                 Tag Name
-            </label>
-            <input className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="tag-name" type="text" placeholder="Tag name" value={tagName} onChange={e => setTagName(e.target.value)} />
+              </label>
+              <input className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="tag-name" type="text" placeholder="Tag name" value={tagName} onChange={e => setTagName(e.target.value)} />
             </div>
             <div className="w-full px-3">
-            <button className="shadow bg-blue-500 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
+              <button className="shadow bg-blue-500 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
                 Create Tag
-            </button>
+              </button>
             </div>
-        </div>
+          </div>
         </form>
-    )}
+      )}
 
-    <div className="flex flex-wrap">
+      <div className="flex flex-wrap">
         {tags.map((tag, index) => (
-        <span key={index} className="bg-blue-500 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2">
-            {tag.name} {/* Assuming Tag has a getName method */}
-        </span>
+          <button key={index} className="bg-blue-500 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer" onClick={() => handleTagClick(tag.name)}>
+            {tag.name}
+          </button>
         ))}
-    </div>
+      </div>
     </div>
   );
 };

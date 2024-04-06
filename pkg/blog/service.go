@@ -51,12 +51,21 @@ func (s *BlogService) CreatePost(ctx context.Context, req *connect.Request[blog.
 }
 
 func (s *BlogService) GetPosts(ctx context.Context, req *connect.Request[blog.GetPostsRequest]) (*connect.Response[blog.GetPostsResponse], error) {
-	var p *blog.Posts
+	var posts *blog.Posts
+	var err error
 
-	posts, err := getPosts(p)
-	if err != nil {
-		return nil, err
+	if len(req.Msg.Tags) > 0 {
+		// If there are tags specified in the request, fetch posts filtered by these tags
+		posts, err = getPostsByTags(req.Msg.Tags)
+	} else {
+		// If no tags are specified, fetch all posts
+		posts, err = getPosts(nil) // Passing nil since the original function signature expects a pointer
 	}
+
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
 	return connect.NewResponse(&blog.GetPostsResponse{
 		Posts: posts,
 	}), nil

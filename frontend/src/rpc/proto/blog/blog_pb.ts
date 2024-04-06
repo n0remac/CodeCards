@@ -230,6 +230,11 @@ export class GetPostsRequest extends Message<GetPostsRequest> {
    */
   posts?: Posts;
 
+  /**
+   * @generated from field: repeated string tags = 2;
+   */
+  tags: string[] = [];
+
   constructor(data?: PartialMessage<GetPostsRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -239,6 +244,7 @@ export class GetPostsRequest extends Message<GetPostsRequest> {
   static readonly typeName = "blog.GetPostsRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "posts", kind: "message", T: Posts },
+    { no: 2, name: "tags", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetPostsRequest {

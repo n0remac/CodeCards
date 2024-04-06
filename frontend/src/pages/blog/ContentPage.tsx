@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { blogService } from '../../service';
 // Ensure the import path matches where your generated code lives
 import { GetPostRequest, Post, DeletePostRequest } from '../../rpc/proto/blog/blog_pb';
-import { formatContent } from './Blog';
+import { formatContent } from './PostComponent';
 
 export const FullPostComponent = () => {
   const { postId } = useParams<{ postId: string }>();
