@@ -49,6 +49,8 @@ const (
 	BlogServiceGetTagsProcedure = "/blog.BlogService/GetTags"
 	// BlogServiceGetPostProcedure is the fully-qualified name of the BlogService's GetPost RPC.
 	BlogServiceGetPostProcedure = "/blog.BlogService/GetPost"
+	// BlogServiceDeletePostProcedure is the fully-qualified name of the BlogService's DeletePost RPC.
+	BlogServiceDeletePostProcedure = "/blog.BlogService/DeletePost"
 )
 
 // BlogServiceClient is a client for the blog.BlogService service.
@@ -60,6 +62,7 @@ type BlogServiceClient interface {
 	GetTagsForPost(context.Context, *connect_go.Request[blog.GetTagsForPostRequest]) (*connect_go.Response[blog.GetTagsForPostResponse], error)
 	GetTags(context.Context, *connect_go.Request[blog.GetTagsRequest]) (*connect_go.Response[blog.GetTagsResponse], error)
 	GetPost(context.Context, *connect_go.Request[blog.GetPostRequest]) (*connect_go.Response[blog.GetPostResponse], error)
+	DeletePost(context.Context, *connect_go.Request[blog.DeletePostRequest]) (*connect_go.Response[blog.DeletePostResponse], error)
 }
 
 // NewBlogServiceClient constructs a client for the blog.BlogService service. By default, it uses
@@ -107,6 +110,11 @@ func NewBlogServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+BlogServiceGetPostProcedure,
 			opts...,
 		),
+		deletePost: connect_go.NewClient[blog.DeletePostRequest, blog.DeletePostResponse](
+			httpClient,
+			baseURL+BlogServiceDeletePostProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -119,6 +127,7 @@ type blogServiceClient struct {
 	getTagsForPost       *connect_go.Client[blog.GetTagsForPostRequest, blog.GetTagsForPostResponse]
 	getTags              *connect_go.Client[blog.GetTagsRequest, blog.GetTagsResponse]
 	getPost              *connect_go.Client[blog.GetPostRequest, blog.GetPostResponse]
+	deletePost           *connect_go.Client[blog.DeletePostRequest, blog.DeletePostResponse]
 }
 
 // CreatePost calls blog.BlogService.CreatePost.
@@ -156,6 +165,11 @@ func (c *blogServiceClient) GetPost(ctx context.Context, req *connect_go.Request
 	return c.getPost.CallUnary(ctx, req)
 }
 
+// DeletePost calls blog.BlogService.DeletePost.
+func (c *blogServiceClient) DeletePost(ctx context.Context, req *connect_go.Request[blog.DeletePostRequest]) (*connect_go.Response[blog.DeletePostResponse], error) {
+	return c.deletePost.CallUnary(ctx, req)
+}
+
 // BlogServiceHandler is an implementation of the blog.BlogService service.
 type BlogServiceHandler interface {
 	CreatePost(context.Context, *connect_go.Request[blog.CreatePostRequest]) (*connect_go.Response[blog.CreatePostResponse], error)
@@ -165,6 +179,7 @@ type BlogServiceHandler interface {
 	GetTagsForPost(context.Context, *connect_go.Request[blog.GetTagsForPostRequest]) (*connect_go.Response[blog.GetTagsForPostResponse], error)
 	GetTags(context.Context, *connect_go.Request[blog.GetTagsRequest]) (*connect_go.Response[blog.GetTagsResponse], error)
 	GetPost(context.Context, *connect_go.Request[blog.GetPostRequest]) (*connect_go.Response[blog.GetPostResponse], error)
+	DeletePost(context.Context, *connect_go.Request[blog.DeletePostRequest]) (*connect_go.Response[blog.DeletePostResponse], error)
 }
 
 // NewBlogServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -208,6 +223,11 @@ func NewBlogServiceHandler(svc BlogServiceHandler, opts ...connect_go.HandlerOpt
 		svc.GetPost,
 		opts...,
 	)
+	blogServiceDeletePostHandler := connect_go.NewUnaryHandler(
+		BlogServiceDeletePostProcedure,
+		svc.DeletePost,
+		opts...,
+	)
 	return "/blog.BlogService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case BlogServiceCreatePostProcedure:
@@ -224,6 +244,8 @@ func NewBlogServiceHandler(svc BlogServiceHandler, opts ...connect_go.HandlerOpt
 			blogServiceGetTagsHandler.ServeHTTP(w, r)
 		case BlogServiceGetPostProcedure:
 			blogServiceGetPostHandler.ServeHTTP(w, r)
+		case BlogServiceDeletePostProcedure:
+			blogServiceDeletePostHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -259,4 +281,8 @@ func (UnimplementedBlogServiceHandler) GetTags(context.Context, *connect_go.Requ
 
 func (UnimplementedBlogServiceHandler) GetPost(context.Context, *connect_go.Request[blog.GetPostRequest]) (*connect_go.Response[blog.GetPostResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.GetPost is not implemented"))
+}
+
+func (UnimplementedBlogServiceHandler) DeletePost(context.Context, *connect_go.Request[blog.DeletePostRequest]) (*connect_go.Response[blog.DeletePostResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("blog.BlogService.DeletePost is not implemented"))
 }

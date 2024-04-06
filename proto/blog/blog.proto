@@ -20,6 +20,7 @@ service BlogService {
   rpc GetTagsForPost(GetTagsForPostRequest) returns (GetTagsForPostResponse);
   rpc GetTags(GetTagsRequest) returns (GetTagsResponse);
   rpc GetPost(GetPostRequest) returns (GetPostResponse);
+  rpc DeletePost(DeletePostRequest) returns (DeletePostResponse);
 }
 
 message Posts {
@@ -49,6 +50,14 @@ message GetPostRequest {
 
 message GetPostResponse {
   Post post = 1;
+}
+
+message DeletePostRequest {
+  int32 id = 1;
+}
+
+message DeletePostResponse {
+  bool success = 1;
 }
 
 message Tag {

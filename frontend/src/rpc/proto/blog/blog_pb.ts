@@ -333,6 +333,80 @@ export class GetPostResponse extends Message<GetPostResponse> {
 }
 
 /**
+ * @generated from message blog.DeletePostRequest
+ */
+export class DeletePostRequest extends Message<DeletePostRequest> {
+  /**
+   * @generated from field: int32 id = 1;
+   */
+  id = 0;
+
+  constructor(data?: PartialMessage<DeletePostRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.DeletePostRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeletePostRequest {
+    return new DeletePostRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeletePostRequest {
+    return new DeletePostRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeletePostRequest {
+    return new DeletePostRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeletePostRequest | PlainMessage<DeletePostRequest> | undefined, b: DeletePostRequest | PlainMessage<DeletePostRequest> | undefined): boolean {
+    return proto3.util.equals(DeletePostRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message blog.DeletePostResponse
+ */
+export class DeletePostResponse extends Message<DeletePostResponse> {
+  /**
+   * @generated from field: bool success = 1;
+   */
+  success = false;
+
+  constructor(data?: PartialMessage<DeletePostResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "blog.DeletePostResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "success", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeletePostResponse {
+    return new DeletePostResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeletePostResponse {
+    return new DeletePostResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeletePostResponse {
+    return new DeletePostResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeletePostResponse | PlainMessage<DeletePostResponse> | undefined, b: DeletePostResponse | PlainMessage<DeletePostResponse> | undefined): boolean {
+    return proto3.util.equals(DeletePostResponse, a, b);
+  }
+}
+
+/**
  * @generated from message blog.Tag
  */
 export class Tag extends Message<Tag> {

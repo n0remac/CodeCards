@@ -29,6 +29,7 @@ type BlogServiceClient interface {
 	GetTagsForPost(ctx context.Context, in *GetTagsForPostRequest, opts ...grpc.CallOption) (*GetTagsForPostResponse, error)
 	GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*GetTagsResponse, error)
 	GetPost(ctx context.Context, in *GetPostRequest, opts ...grpc.CallOption) (*GetPostResponse, error)
+	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
 }
 
 type blogServiceClient struct {
@@ -102,6 +103,15 @@ func (c *blogServiceClient) GetPost(ctx context.Context, in *GetPostRequest, opt
 	return out, nil
 }
 
+func (c *blogServiceClient) DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error) {
+	out := new(DeletePostResponse)
+	err := c.cc.Invoke(ctx, "/blog.BlogService/DeletePost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlogServiceServer is the server API for BlogService service.
 // All implementations should embed UnimplementedBlogServiceServer
 // for forward compatibility
@@ -113,6 +123,7 @@ type BlogServiceServer interface {
 	GetTagsForPost(context.Context, *GetTagsForPostRequest) (*GetTagsForPostResponse, error)
 	GetTags(context.Context, *GetTagsRequest) (*GetTagsResponse, error)
 	GetPost(context.Context, *GetPostRequest) (*GetPostResponse, error)
+	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)
 }
 
 // UnimplementedBlogServiceServer should be embedded to have forward compatible implementations.
@@ -139,6 +150,9 @@ func (UnimplementedBlogServiceServer) GetTags(context.Context, *GetTagsRequest) 
 }
 func (UnimplementedBlogServiceServer) GetPost(context.Context, *GetPostRequest) (*GetPostResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPost not implemented")
+}
+func (UnimplementedBlogServiceServer) DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePost not implemented")
 }
 
 // UnsafeBlogServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -278,6 +292,24 @@ func _BlogService_GetPost_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlogService_DeletePost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlogServiceServer).DeletePost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/blog.BlogService/DeletePost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlogServiceServer).DeletePost(ctx, req.(*DeletePostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlogService_ServiceDesc is the grpc.ServiceDesc for BlogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -312,6 +344,10 @@ var BlogService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPost",
 			Handler:    _BlogService_GetPost_Handler,
+		},
+		{
+			MethodName: "DeletePost",
+			Handler:    _BlogService_DeletePost_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

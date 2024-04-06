@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { blogService } from '../../service';
 // Ensure the import path matches where your generated code lives
-import { GetPostRequest, Post } from '../../rpc/proto/blog/blog_pb';
+import { GetPostRequest, Post, DeletePostRequest } from '../../rpc/proto/blog/blog_pb';
 import { formatContent } from './Blog';
 
 export const FullPostComponent = () => {
   const { postId } = useParams<{ postId: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
+  const isLoggedIn = Boolean(localStorage.getItem('userToken'));
+  const [deleteConfirm, setDeleteConfirm] = useState(''); // State to track the input value
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -45,6 +47,32 @@ export const FullPostComponent = () => {
 
   if (!post) return <div>Loading...</div>;
 
+  const handleDelete = async () => {
+    if (!postId) return;
+
+    // Implement custom confirmation logic
+    const confirmDelete = () => {
+      return new Promise(resolve => {
+        const userInput = prompt("Type 'DELETE' to confirm deletion:", "");
+        resolve(userInput === "DELETE");
+      });
+    };
+
+    const isConfirmed = await confirmDelete();
+    if (isConfirmed) {
+      try {
+        const request = new DeletePostRequest();
+        request.id = parseInt(postId, 10);
+        await blogService.deletePost(request);
+        alert('Post deleted successfully');
+        navigate('/');
+      } catch (error) {
+        console.error('Error deleting the post:', error);
+        alert('Failed to delete post.');
+      }
+    }
+  };
+
 
   return (
     <div className="flex flex-col items-center my-8">
@@ -60,6 +88,14 @@ export const FullPostComponent = () => {
                 <div className="text-sm">{post.author}</div>
             </div>
         </div>
+        {isLoggedIn && (
+                <button 
+                    onClick={handleDelete} 
+                    className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Delete Post
+                </button>
+            )}
     </div>
   );
 };

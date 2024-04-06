@@ -87,6 +87,24 @@ func getPosts(p *blog.Posts) (*blog.Posts, error) {
 	return returnPosts, nil
 }
 
+func deletePost(postID int) error {
+	sess := database.GetSession()
+
+	// First, delete any entries in the posts_tags table associated with this post
+	err := sess.Collection("posts_tags").Find(db.Cond{"post_id": postID}).Delete()
+	if err != nil {
+		return fmt.Errorf("error deleting post tags: %w", err)
+	}
+
+	// Then, delete the post itself
+	err = sess.Collection("posts").Find(db.Cond{"id": postID}).Delete()
+	if err != nil {
+		return fmt.Errorf("error deleting post: %w", err)
+	}
+
+	return nil
+}
+
 // createTag creates a new tag in the database if it doesn't already exist and returns the tag.
 func createTag(name string) (*Tag, error) {
 	sess := database.GetSession()
@@ -193,20 +211,20 @@ func ConvertTagsToProtoTags(tags []Tag) []*blog.Tag {
 }
 
 func getPost(postID int) (*Post, []Tag, error) {
-    sess := database.GetSession()
-    var dbPost Post
+	sess := database.GetSession()
+	var dbPost Post
 
-    // Find the post by ID
-    err := sess.Collection("posts").Find(db.Cond{"id": postID}).One(&dbPost)
-    if err != nil {
-        return nil, nil, err
-    }
+	// Find the post by ID
+	err := sess.Collection("posts").Find(db.Cond{"id": postID}).One(&dbPost)
+	if err != nil {
+		return nil, nil, err
+	}
 
-    // Fetch tags for the post
-    tags, err := getTagsForPost(postID)
-    if err != nil {
-        return nil, nil, err
-    }
+	// Fetch tags for the post
+	tags, err := getTagsForPost(postID)
+	if err != nil {
+		return nil, nil, err
+	}
 
-    return &dbPost, tags, nil
+	return &dbPost, tags, nil
 }

@@ -11,27 +11,26 @@ import (
 type BlogService struct{}
 
 func (s *BlogService) GetPost(ctx context.Context, req *connect.Request[blog.GetPostRequest]) (*connect.Response[blog.GetPostResponse], error) {
-    // Call the new model function to fetch the post and its tags
-    dbPost, tags, err := getPost(int(req.Msg.Id))
-    if err != nil {
-    	return nil, connect.NewError(connect.CodeInternal, err)
-    }
+	// Call the new model function to fetch the post and its tags
+	dbPost, tags, err := getPost(int(req.Msg.Id))
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
 
-    // Convert tags to protobuf format
-    protoTags := ConvertTagsToProtoTags(tags)
+	// Convert tags to protobuf format
+	protoTags := ConvertTagsToProtoTags(tags)
 
-    // Prepare the response
-    post := &blog.Post{
-        Id:      int32(dbPost.ID),
-        Title:   dbPost.Title,
-        Content: dbPost.Content,
-        Author:  dbPost.Author,
-        Tags:    protoTags,
-    }
+	// Prepare the response
+	post := &blog.Post{
+		Id:      int32(dbPost.ID),
+		Title:   dbPost.Title,
+		Content: dbPost.Content,
+		Author:  dbPost.Author,
+		Tags:    protoTags,
+	}
 
-    return connect.NewResponse(&blog.GetPostResponse{Post: post}), nil
+	return connect.NewResponse(&blog.GetPostResponse{Post: post}), nil
 }
-
 
 func (s *BlogService) CreatePost(ctx context.Context, req *connect.Request[blog.CreatePostRequest]) (*connect.Response[blog.CreatePostResponse], error) {
 	p, err := createPost(req.Msg.Post)
@@ -60,6 +59,17 @@ func (s *BlogService) GetPosts(ctx context.Context, req *connect.Request[blog.Ge
 	}
 	return connect.NewResponse(&blog.GetPostsResponse{
 		Posts: posts,
+	}), nil
+}
+
+func (s *BlogService) DeletePost(ctx context.Context, req *connect.Request[blog.DeletePostRequest]) (*connect.Response[blog.DeletePostResponse], error) {
+	err := deletePost(int(req.Msg.Id))
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+
+	return connect.NewResponse(&blog.DeletePostResponse{
+		Success: true,
 	}), nil
 }
 
