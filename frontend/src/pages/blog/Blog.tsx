@@ -35,6 +35,24 @@ export const AllPosts = () => {
   );
 };
 
+export const formatContent = (content: string) => {
+  return content
+    .split('\n') // Split by newline to process line breaks
+    .map((line, index) => (
+      <React.Fragment key={index}>
+        {
+          // Use regular expression to find consecutive spaces and replace them with non-breaking spaces
+          line.split(/(\s+)/).map((segment, segIndex) => (
+            <React.Fragment key={segIndex}>
+              {segment.length > 1 && /\s/.test(segment) ? segment.replace(/ /g, '\u00A0') : segment}
+            </React.Fragment>
+          ))
+        }
+        {index < content.split('\n').length - 1 && <br />}
+      </React.Fragment>
+    ));
+};
+
 interface PostComponentProps {
   post: Post;
 }
@@ -53,7 +71,7 @@ export const PostComponent: React.FC<PostComponentProps> = ({ post }) => {
       onClick={handlePostClick}
     >
       <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-      <p className="text-base mb-4">{post.content.slice(0, 100)}...</p> {/* Only showing the first 100 characters */}
+      <p className="text-base mb-4">{formatContent(post.content.slice(0, 100))}...</p>
       <div className="flex justify-between items-end">
         <div className="flex flex-wrap">
           {post.tags && post.tags.map((tag, index) => (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AllPosts } from './pages/blog/Blog';
-import { CreatePost } from './pages/blog/CreateBlog';
+import { CreatePost } from './pages/blog/CreatePost';
 import Login from './pages/user/Login';
 import Register from './pages/user/Register';
 import Resume from './pages/blog/Resume';

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { blogService } from '../../service';
 // Ensure the import path matches where your generated code lives
 import { GetPostRequest, Post } from '../../rpc/proto/blog/blog_pb';
+import { formatContent } from './Blog';
 
 export const FullPostComponent = () => {
   const { postId } = useParams<{ postId: string }>();
@@ -49,7 +50,7 @@ export const FullPostComponent = () => {
     <div className="flex flex-col items-center my-8">
         <div className="bg-gray-800 text-white rounded-lg p-6 m-4 w-full max-w-3xl">
             <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-            <p className="text-base mb-4">{post.content}</p>
+            <p className="text-base mb-4">{formatContent(post.content)}</p>
             <div className="flex justify-between items-end">
                 <div className="flex flex-wrap">
                 {post.tags.map((tag, index) => ( // Adjust based on generated field name for the list of tags
