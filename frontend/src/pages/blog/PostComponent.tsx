@@ -38,7 +38,7 @@ export const PostComponent: React.FC<PostComponentProps> = ({ post }) => {
       onClick={handlePostClick}
     >
       <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-      <p className="text-base mb-4">{formatContent(post.content.slice(0, 100))}...</p>
+      <p className="text-base mb-4">{formatContent(post.content.slice(0, 300))}...</p>
       <div className="flex justify-between items-end">
         <div className="flex flex-wrap">
           {post.tags && post.tags.map((tag, index) => (
