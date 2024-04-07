@@ -61,7 +61,7 @@ export default function App() {
                     <Route path="/" element={<AllPosts />} />
                     <Route path="/createpost" element={<CreatePost />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path='/register' element={<Register />} />
+                    {/* <Route path='/register' element={<Register />} /> */}
                     <Route path='/resume' element={<Resume />} />
                     <Route path='/poetry' element={<Poetry />} />
                     <Route path='/tags' element={<CreateTag />} />
