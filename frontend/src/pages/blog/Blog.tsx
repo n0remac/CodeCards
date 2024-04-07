@@ -29,7 +29,7 @@ export const AllPosts = () => {
     <div className="flex flex-col items-center my-8">
       <h1 className="text-3xl font-bold mb-8">All Blog Posts</h1>
       
-      {posts && posts.posts.map((post) => (
+      {posts && [...posts.posts].reverse().map((post) => (
         <PostComponent key={post.id} post={post} />
       ))}
     </div>
