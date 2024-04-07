@@ -32,13 +32,13 @@ export default function App() {
                                 <li className="float-left">
                                     <Link to="/createpost" className="block text-white text-center py-3 px-4 no-underline">Create</Link>
                                 </li>
-                                <li className="float-left">
-                                    <Link to="/tags" className="block text-white text-center py-3 px-4 no-underline">Tags</Link>
-                                </li>
                             </div>
                         )}
                         <li className="float-left">
                             <Link to="/resume" className="block text-white text-center py-3 px-4 no-underline">Resume</Link>
+                        </li>
+                        <li className="float-left">
+                            <Link to="/tags" className="block text-white text-center py-3 px-4 no-underline">Tags</Link>
                         </li>
                         <li className="float-left">
                             <Link to="/poetry" className="block text-white text-center py-3 px-4 no-underline">Poetry</Link>
