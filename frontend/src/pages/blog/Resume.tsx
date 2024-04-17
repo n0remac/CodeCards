@@ -17,17 +17,19 @@ const Section: React.FC<SectionProps> = ({ title, children }) => (
 const Resume: React.FC = () => {
   return (
     <div className="flex flex-col items-center my-8">
-      <Header />
-      <ProfessionalExperience />
-      <ProjectExperience />
-      <TechnicalSkills />
-      <Education />
+      <div className="bg-gray-800 w-full max-w-4xl rounded-lg">
+        <Header />
+        <ProfessionalExperience />
+        <ProjectExperience />
+        <TechnicalSkills />
+        <Education />
+      </div>
     </div>
   );
 };
 
 const Header: React.FC = () => (
-  <header className="text-white rounded-lg p-6 mb-8 w-full max-w-4xl text-center">
+  <header className="text-white rounded-lg p-6 w-full max-w-4xl text-center">
     <h1 className="text-3xl font-bold">Cameron Smart</h1>
     <p className="text-xl">Seattle, WA | 360.712.7049 | smartcameron@gmail.com</p>
     <p>
@@ -71,7 +73,6 @@ const ProfessionalExperience: React.FC = () => (
 
 const ProjectExperience: React.FC = () => (
   <Section title="Project Experience">
-    {/* Adding project experience details */}
     <div>
       <h3 className="text-xl font-bold mb-2">Fabled Fusion | Developer</h3>
       <ul className="list-disc ml-5 mt-2">
