@@ -172,6 +172,25 @@ Where tons of rat traps,
 I know are cruel, are the solution
 To all the rat crap.
     `} /> 
+            <PoemSection title="Smile" poem={`
+A bright smile hides her thoughts unsaid,
+Afflicting throbs upon my soul,
+About my heart, into my head,
+I wonder what those green eyes meant.
+Her stylish garb, one must extol,
+Upon her glance, a face goes red.
+Internal zeal explains this toll,
+External grace is what I dreamt.
+
+Touching hands, they set the pace,
+Spinning feet across the floor.
+Turning, gliding, through the space,
+Leading hope to be embraced.
+Turn abroad, your cheeks restore
+Warmth in waves across my face.
+Gone the steps I've learned before
+Worrying that I'll trip in haste.
+    `} /> 
     </div>
   );
 };
