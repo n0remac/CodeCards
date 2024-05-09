@@ -8,10 +8,29 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ title, children }) => (
-  <div className="text-white rounded-lg p-6 mb-8 w-full max-w-4xl">
+  <div className="grid place-content-center bg-gray-800 text-white rounded-lg p-6 mb-8 w-2/5 max-w-4xl">
     <h2 className="text-2xl font-bold mb-4">{title}</h2>
     {children}
   </div>
+);
+
+const Header: React.FC = () => (
+  <header className="text-white rounded-lg p-6 mb-8 w-full max-w-4xl text-center">
+    <h1 className="text-3xl font-bold">Poems by Cameron Smart</h1>
+    <p className="text-xl">A Pineful Collection</p>
+  </header>
+);
+
+interface PoemSectionProps {
+  title: string;
+  poem: string;
+}
+
+const PoemSection: React.FC<PoemSectionProps> = ({ title, poem }) => (
+  
+  <Section title={title}>
+    <pre className="whitespace-pre-wrap">{poem}</pre>
+  </Section>
 );
 
 // Main Poems Page Component
@@ -215,21 +234,3 @@ Finding prose to fill the time
     </div>
   );
 };
-
-const Header: React.FC = () => (
-  <header className="text-white rounded-lg p-6 mb-8 w-full max-w-4xl text-center">
-    <h1 className="text-3xl font-bold">Poems by Cameron Smart</h1>
-    <p className="text-xl">A Pineful Collection</p>
-  </header>
-);
-
-interface PoemSectionProps {
-  title: string;
-  poem: string;
-}
-
-const PoemSection: React.FC<PoemSectionProps> = ({ title, poem }) => (
-  <Section title={title}>
-    <pre className="whitespace-pre-wrap">{poem}</pre>
-  </Section>
-);
