@@ -8,7 +8,7 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ title, children }) => (
-  <div className="grid place-content-center bg-gray-800 text-white rounded-lg p-6 mb-8 w-2/5 max-w-4xl">
+  <div className="grid place-content-center bg-gray-800 text-white rounded-lg p-6 mb-8 max-w-4xl">
     <h2 className="text-2xl font-bold mb-4">{title}</h2>
     {children}
   </div>
