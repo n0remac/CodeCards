@@ -191,6 +191,27 @@ Warmth in waves across my face.
 Gone the steps I've learned before
 Worrying that I'll trip in haste.
     `} /> 
+            <PoemSection title="Silence" poem={`
+Silent smile and eyes that gleam
+Sunlit hair breaks reverie
+Siphoned notions to escape
+Secretly thoughts ne’er abate
+
+Wisely walk away from wiles
+Wistful thoughts of what’s beneath
+Wonder what rewards these smiles
+Whisper words that seek release
+
+Sudden smile, again entranced
+Swivel from slim elegance
+Sunder siphon, now a flood
+Shimmer between lust and love
+
+Forgetting feelings formed in haste
+Forging friendship in their place
+Figments in a confused mind
+Finding prose to fill the time
+    `} /> 
     </div>
   );
 };
