@@ -231,6 +231,25 @@ Forging friendship in their place
 Figments in a confused mind
 Finding prose to fill the time
     `} /> 
+    <PoemSection title="Fermentation" poem={`
+Feelings fermenting
+One thing, now another
+Sour grapes, stomach twists
+Frontal lobe elating fumigation
+Remembering love’s foamy bottles bringing balance
+Frothy bubbles overflowing
+Following feeling, forbearance hiding
+Foreshadowed features, forces colliding
+
+Feelings fermenting
+Sweet juice, sweeter wine
+Tipsy-turvy, tasting treasures choosing
+Choices taut, churns intestines
+Heartache knots taught reflection
+Lustful headaches, true commitment
+Turning yeasts ill treat affliction
+Trusting not wine’s love addiction
+`} /> 
     </div>
   );
 };
