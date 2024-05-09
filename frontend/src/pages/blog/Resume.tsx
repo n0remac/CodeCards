@@ -44,7 +44,7 @@ const ProfessionalExperience: React.FC = () => (
     <div>
       <h3 className="text-xl font-bold mb-2">Raft | Full-stack developer | Remote | 2022 - Present</h3>
       <ul className="list-disc ml-5 mt-2">
-        <li>Led full-stack development for the TANF government project using Python, React, NGINX, and CircleCI.</li>
+        <li>Lead full-stack development for the TANF government project using Python, React, NGINX, and CircleCI.</li>
         <li>Introduced and integrated modern tools like Redux Toolkit in a Java, Spring Boot, React, Redux, and Postgres environment, enhancing team efficiency.</li>
         <li>Designed and implemented a CICD pipeline for an integration test suite, allowing the project to inform snapshot releases.</li>
         <li>Helped rearchitect our project as a monorepo, making it easier to understand and maintain.</li>
