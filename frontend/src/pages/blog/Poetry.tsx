@@ -235,11 +235,11 @@ Finding prose to fill the time
 Feelings fermenting
 One thing, now another
 Sour grapes, stomach twists
-Frontal lobe elating fumigation
-Remembering love’s foamy bottles bringing balance
+Frontal lobe effervescence
+Love's foamy bottles bringing balance
 Frothy bubbles overflowing
-Following feeling, forbearance hiding
-Foreshadowed features, forces colliding
+Following intoxication
+Foreshadow bitter distillation
 
 Feelings fermenting
 Sweet juice, sweeter wine
