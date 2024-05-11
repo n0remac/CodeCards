@@ -248,7 +248,7 @@ Exploding bottles
 Fermented feeling holding fast
 Forgone senses flowing past
 Fixtures fogging unkempt minds
-Feeling silly throughout time
+Feeling silly drinking time
 Foppish fancies fain delight
 Foreign views obscuring sight
 Hiccup brightened declarations
@@ -262,6 +262,7 @@ Heartache knots taught reflection
 Lustful headaches, true commitment
 Turning yeast ill treats affliction
 Trusting not wine’s love addiction
+
 `} /> 
     </div>
   );
