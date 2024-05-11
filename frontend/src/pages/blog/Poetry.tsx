@@ -241,13 +241,26 @@ Frothy bubbles overflowing
 Following intoxication
 Foreshadow bitter distillation
 
-Feelings fermenting
+Popping corks 
+White wine vibrato 
+Fwooshing fizz
+Exploding bottles
+Fermented feeling holding fast
+Forgone senses flowing past
+Fixtures fogging unkempt minds
+Feeling silly throughout time
+Foppish fancies fain delight
+Foreign views obscuring sight
+Hiccup brightened declarations
+Hearing words, fine sensation
+
+Feelings fermented
 Sweet juice, sweeter wine
 Tipsy-turvy, tasting treasures choosing
 Choices taut, churns intestines
 Heartache knots taught reflection
 Lustful headaches, true commitment
-Turning yeasts ill treat affliction
+Turning yeast ill treats affliction
 Trusting not wine’s love addiction
 `} /> 
     </div>
