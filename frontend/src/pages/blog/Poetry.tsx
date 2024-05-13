@@ -262,7 +262,27 @@ Heartache knots taught reflection
 Lustful headaches, true commitment
 Turning yeast ill treats affliction
 Trusting not wine’s love addiction
+`} /> 
+    <PoemSection title="To Become" poem={`
+The state of becoming;
+Becoming state itself,
+Itself is not enough,
+Enough is nothing else.
 
+Else, the future carries,
+carries along the past,
+Past the current present
+Present shall not amass.
+
+Amass past and future.
+Future holds all that’s new,
+New for just a moment,
+A moment that we knew.
+
+The state of becoming;
+Became the state of life
+Live time’s derivative
+Derive an inner sight.
 `} /> 
     </div>
   );
