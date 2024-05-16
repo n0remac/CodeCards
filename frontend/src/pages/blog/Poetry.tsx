@@ -284,6 +284,27 @@ Became the state of life
 Live time’s derivative
 Derive an inner sight.
 `} /> 
+<PoemSection title="Ephemera" poem={`
+Feel a moment happening
+Happening only now
+Now, a chilling excitement
+Excitement while it lasts
+
+Lasting ever after
+After all is said
+Said a fearful reckoning
+A reckoning to dread
+
+Dreading a memory
+Memory to guide the heart
+Heart beats remembered 
+Remembered from the start
+
+Starting to feel the moment
+Momentarily forget
+Forgetting all but feelings
+Feeling no regrets
+`} /> 
     </div>
   );
 };
